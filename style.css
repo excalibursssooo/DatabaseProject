@@ -1,0 +1,149 @@
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+header {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+header .lead {
+    opacity: 0.95;
+    font-weight: 300;
+    font-size: 1.3rem;
+}
+
+.feature-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card .card-body {
+    padding: 2rem 1.5rem;
+}
+
+.feature-card .card-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+}
+
+.feature-card .btn {
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+}
+
+.feature-card .btn:hover {
+    transform: translateY(-2px);
+}
+
+.modal-content {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    color: white;
+    border-radius: 15px 15px 0 0;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+footer {
+    border-top: 1px solid #dee2e6;
+    margin-top: 50px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        margin: 15px;
+        padding: 20px;
+    }
+    
+    header {
+        padding: 25px;
+        margin-bottom: 25px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .feature-card .card-body {
+        padding: 1.5rem 1rem;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-card:nth-child(3) { animation-delay: 0.3s; }
+.feature-card:nth-child(4) { animation-delay: 0.4s; }
+.feature-card:nth-child(5) { animation-delay: 0.5s; }
+.feature-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* 按钮样式增强 */
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 图标样式 */
+.fas, .fab {
+    margin-right: 8px;
+}
