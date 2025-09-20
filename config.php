@@ -62,4 +62,9 @@ function displayResults($results, $emptyMessage = "No data found.") {
     }
 }
 
+function getBlockchain() {
+    global $pdo;
+    return Blockchain::getInstance($pdo);
+}
+
 ?>

@@ -20,7 +20,7 @@ $currentUser = getCurrentUser();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silent Car Auction System</title>
+    <title>Blockchain Car Auction System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -167,6 +167,23 @@ $currentUser = getCurrentUser();
                 </div>
             </div>
         </div>
+        <!-- 区块链浏览器 -->
+        <div class="col">
+            <div class="card h-100 feature-card">
+                <div class="card-body text-center">
+                    <i class="fas fa-link fa-3x text-info mb-3"></i>
+                    <h5 class="card-title">Blockchain Explorer</h5>
+                    <p class="card-text">View all transactions on the blockchain</p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <div class="d-grid">
+                        <a href="blockchain_explorer.php" class="btn btn-outline-info">
+                            <i class="fas fa-cubes"></i> View Blockchain
+                        </a>
+                    </div>
+                </div>
+            </div>
+</div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

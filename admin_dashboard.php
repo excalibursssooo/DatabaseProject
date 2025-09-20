@@ -99,7 +99,6 @@ if (!isLoggedIn() || !$_SESSION['is_admin']) {
                 </div>
             </div>
         </div>
-
         <div class="row mt-4">
             <div class="col-md-6">
                 <div class="card">
@@ -187,6 +186,10 @@ if (!isLoggedIn() || !$_SESSION['is_admin']) {
                             </a>
                             <a href="manage_users.php" class="btn btn-info me-md-2">
                                 <i class="fas fa-users-cog"></i> Manage Users
+                            </a>
+                            <!-- 添加区块链浏览器链接 -->
+                            <a href="blockchain_explorer.php" class="btn btn-success me-md-2">
+                                <i class="fas fa-cubes"></i> Blockchain Explorer
                             </a>
                         </div>
                     </div>

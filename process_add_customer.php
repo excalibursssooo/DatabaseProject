@@ -14,7 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $stmt = $pdo->prepare("CALL AddCustomer(?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([$first_name, $last_name, $address, $city, $state, $zip_code, $email, $phone]);
-        
+        $customer_id = $pdo->query("SELECT LAST_INSERT_ID()")->fetchColumn();
+        $username = $first_name . ' ' . $last_name;
+        $password = password_hash('password', PASSWORD_DEFAULT);
+
+        $userStmt = $pdo->prepare("INSERT INTO users (username, password, customer_id) VALUES (?, ?, ?)");
+        $userStmt->execute([$username, $password, $customer_id]);
         header('Location: index.php?message=Customer added successfully!&type=success');
         exit();
     } catch (PDOException $e) {

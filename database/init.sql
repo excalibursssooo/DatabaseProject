@@ -17,6 +17,32 @@ CREATE TABLE customers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 用户表
+CREATE TABLE users (
+user_id INT AUTO_INCREMENT PRIMARY KEY,
+username VARCHAR(50) NOT NULL UNIQUE,
+password VARCHAR(255) NOT NULL,
+customer_id INT NOT NULL,
+is_admin TINYINT(1) DEFAULT 0,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
+);
+
+CREATE TABLE blockchain (
+    block_id INT AUTO_INCREMENT PRIMARY KEY,
+    previous_hash VARCHAR(64) NOT NULL,
+    hash VARCHAR(64) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data TEXT NOT NULL,
+    nonce INT NOT NULL,
+    auto_id INT,
+    customer_id INT,
+    INDEX idx_block_hash (hash),
+    INDEX idx_block_auto (auto_id),
+    FOREIGN KEY (auto_id) REFERENCES autos(auto_id) ON DELETE SET NULL,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE SET NULL
+);
+
 -- 车辆表
 CREATE TABLE autos (
     auto_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -284,3 +310,17 @@ INSERT INTO bids (auto_id, customer_id, bid_amount, bid_date) VALUES
 (4, 8, 9500.00, '2023-10-06 15:10:00'),
 (5, 9, 7500.00, '2023-10-05 12:25:00'),
 (6, 10, 6500.00, '2023-10-07 14:50:00');
+
+
+INSERT INTO users (username, password, customer_id, is_admin) VALUES
+('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, 0),
+('johndoe', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1, 0),
+('janesmith', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 2, 0),
+('mikejohnson', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 3, 0),
+('sarahwilliams', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 4, 0),
+('tombrown', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 5, 0),
+('lisadavis', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 6, 0),
+('davidmiller', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 7, 0),
+('amywilson', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 8, 0),
+('chrismoore', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 9, 0),
+('karentaylor', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 10, 0);
