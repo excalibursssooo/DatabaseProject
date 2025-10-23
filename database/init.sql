@@ -65,6 +65,7 @@ CREATE TABLE bids (
     bid_amount DECIMAL(10, 2) NOT NULL,
     bid_date DATETIME NOT NULL,
     is_winner BOOLEAN DEFAULT FALSE,
+    block_hash VARCHAR(64) NOT NULL,
     FOREIGN KEY (auto_id) REFERENCES autos(auto_id) ON DELETE CASCADE,
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
 );
