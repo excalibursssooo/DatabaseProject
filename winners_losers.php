@@ -26,19 +26,6 @@
                 if (count($results) > 0) {
                     echo '<h3>Results for Auto ID: ' . $auto_id . '</h3>';
                     displayResults($results);
-                    // 在显示结果后添加区块链验证
-                    include 'Blockchain.php';
-                    echo '<div class="mt-4">';
-                    echo '<h4>Blockchain Verification</h4>';
-                    $blockchain = new Blockchain($pdo);
-                    if ($blockchain->isValid()) {
-                        echo '<div class="alert alert-success">✓ Blockchain integrity verified - No tampering detected</div>';
-                    } else {
-                        echo '<div class="alert alert-danger">✗ Blockchain integrity compromised - Tampering detected!</div>';
-                    }
-                    echo '</div>';
-                } else {
-                    echo '<div class="alert alert-info">No bids found for Auto ID: ' . $auto_id . '</div>';
                 }
             } catch (PDOException $e) {
                 echo '<div class="alert alert-danger">Error: ' . $e->getMessage() . '</div>';

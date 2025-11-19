@@ -9,12 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $customer_id = $_POST['customer_id'];
     $bid_amount = $_POST['bid_amount'];
     
+    // 开始事务
+    $pdo->beginTransaction();
+    
     try {
         // 初始化区块链
         $blockchain = Blockchain::getInstance($pdo);
         
-        
-        // 检查车辆是否存在
+        // 检查车辆是否存在且可用
         $stmt = $pdo->prepare("SELECT auto_id FROM autos WHERE auto_id = ? AND is_available = TRUE");
         $stmt->execute([$auto_id]);
         if ($stmt->rowCount() === 0) {
@@ -36,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($bid_amount <= $max_bid) {
             throw new Exception('Bid amount must be higher than current maximum bid: $' . $max_bid);
         }
+        
         // 创建区块链交易数据
         $timestamp = time();
         $bidData = [
@@ -45,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'bid_amount' => $bid_amount,
             'timestamp' => $timestamp
         ];
-        // 挖矿并添加区块
+        
+        // 挖矿并添加区块 - 现在所有检查都已通过
         $blockHash = $blockchain->mineBlock($bidData, $auto_id, $customer_id);
         
         // 插入投标记录并关联区块链哈希
@@ -55,6 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
         $stmt->execute([$auto_id, $customer_id, $bid_amount, $blockHash]);
         
+        // 提交事务
+        $pdo->commit();
+        
         echo json_encode([
             'success' => true, 
             'message' => 'Bid placed successfully!',
@@ -62,8 +69,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         
     } catch (PDOException $e) {
+        // 回滚事务
+        $pdo->rollBack();
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
     } catch (Exception $e) {
+        // 回滚事务
+        $pdo->rollBack();
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
 }
