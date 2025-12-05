@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 
-// 检查用户是否登录且是管理员
+// check if user is logged in and is admin
 if (!isLoggedIn() || !$_SESSION['is_admin']) {
     header('Location: login.php');
     exit();
@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // 简单的表单验证
+        // Simple form validation
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('form');
             
@@ -184,14 +184,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 const currentYear = new Date().getFullYear();
                 const year = document.getElementById('year').value;
                 
-                // VIN验证 (简单版本)
+                // VIN validation (simple version)
                 if (vin.length !== 17 || /[IOQ]/i.test(vin)) {
                     e.preventDefault();
                     alert('Please enter a valid 17-character VIN (excluding I, O, and Q)');
                     return false;
                 }
                 
-                // 年份验证
+                // year validation
                 if (year < 1900 || year > currentYear + 1) {
                     e.preventDefault();
                     alert('Please enter a valid year between 1900 and ' + (currentYear + 1));

@@ -4,13 +4,13 @@ class Blockchain {
     private $pdo;
     private $difficulty = 2;
 
-    // 私有构造函数防止直接实例化
+    // Private constructor to prevent direct instantiation
     private function __construct($pdo) {
         $this->pdo = $pdo;
         $this->createGenesisBlock();
     }
 
-    // 获取单例实例
+    // Get singleton instance
     public static function getInstance($pdo = null) {
         if (self::$instance === null) {
             if ($pdo === null) {
@@ -21,10 +21,10 @@ class Blockchain {
         return self::$instance;
     }
 
-    // 防止克隆
+    // prevent cloning
     private function __clone() {}
 
-    // 防止反序列化
+    // prevent unserialization
     public function __wakeup() {}
 
     private function createGenesisBlock() {
@@ -69,7 +69,7 @@ class Blockchain {
         return hash('sha256', $dataString);
     }
 
-    // 挖矿新块 
+    // Mine new block 
     public function mineBlock($data, $auto_id = null, $customer_id = null) {
         $previousBlock = $this->getLatestBlock();
         $previousHash = $previousBlock['hash'];
@@ -102,7 +102,7 @@ class Blockchain {
         
         return $hash;
     }
-    // 验证区块链完整性
+    // Validate blockchain integrity
     public function isValid() {
         $stmt = $this->pdo->query("SELECT * FROM blockchain ORDER BY block_id");
         $blocks = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -139,18 +139,18 @@ class Blockchain {
         
         return true;
     }
-    // 获取最新区块
+    // Get latest block
     public function getLatestBlock() {
         $stmt = $this->pdo->query("SELECT * FROM blockchain ORDER BY block_id DESC LIMIT 1");
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-    // 获取所有区块
+    // Get all blocks
     public function getChain() {
         $stmt = $this->pdo->query("SELECT * FROM blockchain ORDER BY block_id");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // 根据车辆ID获取相关区块
+    // Get blocks by vehicle ID
     public function getBlocksByAutoId($auto_id) {
         $stmt = $this->pdo->prepare("SELECT * FROM blockchain WHERE auto_id = ? ORDER BY block_id");
         $stmt->execute([$auto_id]);

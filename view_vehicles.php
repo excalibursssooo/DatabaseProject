@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <!-- 车辆列表 -->
+        <!-- Vehicle List -->
         <div class="card">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">
@@ -86,7 +86,7 @@
             <div class="card-body">
                 <?php
                 try {
-                    // 构建查询
+                    // build dynamic query based on filters
                     $sql = "SELECT * FROM autos WHERE is_available = TRUE";
                     $params = [];
                     

@@ -1,13 +1,13 @@
 <?php 
 include 'config.php';
 
-// 检查用户是否登录
+// check if user is logged in
 if (!isLoggedIn()) {
     header('Location: login.php');
     exit();
 }
 
-// 检查用户是否是管理员，如果是，重定向到管理员仪表板
+// Check if user is admin, if yes, redirect to admin dashboard
 if ($_SESSION['is_admin']) {
     header('Location: admin_dashboard.php');
     exit();
@@ -46,9 +46,9 @@ $currentUser = getCurrentUser();
             </div>
         </header>
 
-        <!-- 功能卡片网格 -->
+        <!-- Feature cards grid -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <!-- 查看车辆 -->
+            <!-- View Vehicles -->
             <div class="col">
                 <div class="card h-100 feature-card">
                     <div class="card-body text-center">
@@ -66,7 +66,7 @@ $currentUser = getCurrentUser();
                 </div>
             </div>
 
-            <!-- 投标管理 -->
+            <!-- Bid Management -->
             <div class="col">
                 <div class="card h-100 feature-card">
                     <div class="card-body text-center">
@@ -87,7 +87,7 @@ $currentUser = getCurrentUser();
                 </div>
             </div>
 
-            <!-- 结果查询 -->
+            <!-- Auction Results -->
             <div class="col">
                 <div class="card h-100 feature-card">
                     <div class="card-body text-center">
@@ -106,7 +106,7 @@ $currentUser = getCurrentUser();
             </div>
         </div>
 
-        <!-- 查看结果模态框 -->
+        <!-- View Results Modal -->
         <div class="modal fade" id="view-results-modal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -128,7 +128,7 @@ $currentUser = getCurrentUser();
             </div>
         </div>
 
-        <!-- 投标模态框 -->
+        <!-- Place Bid Modal -->
         <div class="modal fade" id="place-bid-modal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -167,7 +167,7 @@ $currentUser = getCurrentUser();
                 </div>
             </div>
         </div>
-        <!-- 区块链浏览器 -->
+        <!-- Blockchain Explorer -->
         <div class="col">
             <div class="card h-100 feature-card">
                 <div class="card-body text-center">
@@ -188,7 +188,7 @@ $currentUser = getCurrentUser();
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // 投标提交函数
+        // Submit bid function
         function submitBid() {
             const formData = new FormData(document.getElementById('bidForm'));
             const resultDiv = document.getElementById('bidResult');

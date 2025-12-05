@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 
-// 检查用户是否登录且是管理员
+// check if user is logged in and is admin
 if (!isLoggedIn() || !$_SESSION['is_admin']) {
     header('Location: login.php');
     exit();
@@ -187,7 +187,7 @@ if (!isLoggedIn() || !$_SESSION['is_admin']) {
                             <a href="manage_users.php" class="btn btn-info me-md-2">
                                 <i class="fas fa-users-cog"></i> Manage Users
                             </a>
-                            <!-- 添加区块链浏览器链接 -->
+                            <!-- Add Blockchain Explorer link -->
                             <a href="blockchain_explorer.php" class="btn btn-success me-md-2">
                                 <i class="fas fa-cubes"></i> Blockchain Explorer
                             </a>

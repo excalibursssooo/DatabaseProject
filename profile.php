@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 
-// 检查用户是否登录
+// check if user is logged in
 if (!isLoggedIn()) {
     header('Location: login.php');
     exit();
@@ -9,7 +9,7 @@ if (!isLoggedIn()) {
 
 $currentUser = getCurrentUser();
 
-// 处理表单提交
+// process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     
     try {
-        // 更新customers表
+        // update customers table
         $stmt = $pdo->prepare("
             UPDATE customers 
             SET first_name = ?, last_name = ?, address = ?, city = ?, state = ?, zip_code = ?, email = ?, phone = ?
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
         $stmt->execute([$first_name, $last_name, $address, $city, $state, $zip_code, $email, $phone, $currentUser['customer_id']]);
         
-        // 更新users表
+        // update users table
         $stmt = $pdo->prepare("
             UPDATE users 
             SET username = ?
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
         $stmt->execute([$username, $_SESSION['user_id']]);
         
-        // 更新session中的用户名
+        // update username in session
         $_SESSION['username'] = $username;
         
         $successMessage = 'Profile updated successfully!';
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errorMessage = 'Error updating profile: ' . $e->getMessage();
     }
     
-    // 重新获取用户信息
+    // re-fetch user information
     $currentUser = getCurrentUser();
 }
 ?>

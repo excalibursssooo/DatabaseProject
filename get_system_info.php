@@ -4,15 +4,15 @@ include 'config.php';
 header('Content-Type: application/json');
 
 try {
-    // 获取客户总数
+    // Get total customers
     $stmt = $pdo->query("SELECT COUNT(*) as total FROM customers");
     $total_customers = $stmt->fetch()['total'];
     
-    // 获取车辆总数
+    // Get total vehicles
     $stmt = $pdo->query("SELECT COUNT(*) as total FROM autos");
     $total_vehicles = $stmt->fetch()['total'];
     
-    // 获取投标总数
+    // Get total bids
     $stmt = $pdo->query("SELECT COUNT(*) as total FROM bids");
     $total_bids = $stmt->fetch()['total'];
     

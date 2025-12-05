@@ -2,7 +2,7 @@
 <?php
 include 'config.php';
 
-// 检查用户是否登录且是管理员
+// check if admin is logged in
 if (!isLoggedIn() || !$_SESSION['is_admin']) {
     header('Location: login.php');
     exit();

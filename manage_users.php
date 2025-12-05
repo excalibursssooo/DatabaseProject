@@ -1,13 +1,13 @@
 <?php
 include 'config.php';
 
-// 检查用户是否登录且是管理员
+// Check if user is logged in and is admin
 if (!isLoggedIn() || !$_SESSION['is_admin']) {
     header('Location: login.php');
     exit();
 }
 
-// 处理用户删除
+// process delete user request
 if (isset($_GET['delete'])) {
     $user_id = $_GET['delete'];
     $stmt = $pdo->prepare("DELETE FROM users WHERE user_id = ? AND user_id != ?");
@@ -16,7 +16,7 @@ if (isset($_GET['delete'])) {
     exit();
 }
 
-// 获取所有用户
+// get all users
 $stmt = $pdo->query("SELECT u.*, c.first_name, c.last_name FROM users u LEFT JOIN customers c ON u.customer_id = c.customer_id");
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>

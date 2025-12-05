@@ -14,12 +14,12 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// 检查用户是否登录
+// Check if user is logged in
 function isLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
-// 获取当前用户信息
+// Get current user information (including customer info)
 // 获取当前用户信息（包含客户信息）
 function getCurrentUser() {
     global $pdo;
@@ -36,7 +36,7 @@ function getCurrentUser() {
     return null;
 }
 
-// 通用函数：显示数据库结果表格
+// generic function to display results in a table
 function displayResults($results, $emptyMessage = "No data found.") {
     if (count($results) > 0) {
         echo '<div class="table-responsive">';

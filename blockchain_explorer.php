@@ -2,7 +2,7 @@
 include 'config.php';
 include 'Blockchain.php';
 
-// 检查用户是否登录
+// check if user is logged in
 if (!isLoggedIn()) {
     header('Location: login.php');
     exit();
@@ -11,7 +11,7 @@ $blockchain = Blockchain::getInstance($pdo);
 
 $action = $_GET['action'] ?? 'view';
 
-// 获取特定车辆或所有区块
+// Get blocks for a specific vehicle or all blocks
 if (isset($_GET['auto_id'])) {
     $blocks = $blockchain->getBlocksByAutoId($_GET['auto_id']);
     $title = "Blockchain for Vehicle #" . $_GET['auto_id'];

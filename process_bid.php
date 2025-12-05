@@ -9,28 +9,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $customer_id = $_POST['customer_id'];
     $bid_amount = $_POST['bid_amount'];
     
-    // 开始事务
+    // Begin transaction
     $pdo->beginTransaction();
     
     try {
-        // 初始化区块链
+        // Initialize blockchain
         $blockchain = Blockchain::getInstance($pdo);
         
-        // 检查车辆是否存在且可用
+        // Check if vehicle exists and is available
         $stmt = $pdo->prepare("SELECT auto_id FROM autos WHERE auto_id = ? AND is_available = TRUE");
         $stmt->execute([$auto_id]);
         if ($stmt->rowCount() === 0) {
             throw new Exception('Vehicle not found or not available for bidding.');
         }
         
-        // 检查客户是否存在
+        // check if customer exists
         $stmt = $pdo->prepare("SELECT customer_id FROM customers WHERE customer_id = ?");
         $stmt->execute([$customer_id]);
         if ($stmt->rowCount() === 0) {
             throw new Exception('Customer not found.');
         }
         
-        // 检查投标金额是否高于当前最高价
+        // check if bid amount is higher than current max bid
         $stmt = $pdo->prepare("SELECT COALESCE(MAX(bid_amount), 0) as max_bid FROM bids WHERE auto_id = ?");
         $stmt->execute([$auto_id]);
         $max_bid = $stmt->fetch(PDO::FETCH_ASSOC)['max_bid'];
@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new Exception('Bid amount must be higher than current maximum bid: $' . $max_bid);
         }
         
-        // 创建区块链交易数据
+        // block data
         $timestamp = time();
         $bidData = [
             'type' => 'bid',
@@ -49,17 +49,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'timestamp' => $timestamp
         ];
         
-        // 挖矿并添加区块 - 现在所有检查都已通过
+        // Mine block and add to blockchain - all checks passed now
         $blockHash = $blockchain->mineBlock($bidData, $auto_id, $customer_id);
         
-        // 插入投标记录并关联区块链哈希
+        // Insert bid record and associate blockchain hash
         $stmt = $pdo->prepare("
             INSERT INTO bids (auto_id, customer_id, bid_amount, bid_date, block_hash) 
             VALUES (?, ?, ?, NOW(), ?)
         ");
         $stmt->execute([$auto_id, $customer_id, $bid_amount, $blockHash]);
         
-        // 提交事务
+        // Commit transaction
         $pdo->commit();
         
         echo json_encode([
@@ -69,11 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         
     } catch (PDOException $e) {
-        // 回滚事务
+        // Rollback transaction
         $pdo->rollBack();
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
     } catch (Exception $e) {
-        // 回滚事务
+        // Rollback transaction
         $pdo->rollBack();
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
